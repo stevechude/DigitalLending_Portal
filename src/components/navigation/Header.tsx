@@ -16,7 +16,7 @@ const Header = () => {
   const navigate = useRouter();
 
   return (
-    <div className="flex bg-white w-full max-h-[80px] h-[80px] lg:h-[90px] shadow">
+    <div className="flex bg-white w-full max-h-[80px] h-[80px] lg:h-[90px] border-b border-[#F0F0F0]">
       <div className="w-full flex items-center justify-between px-2 lg:px-4">
         <button
           onClick={() => setOpenMenu(true)}
@@ -102,12 +102,12 @@ const Header = () => {
         <PageTitle />
 
         <div className="flex items-center gap-2 lg:gap-3">
-          <div className="bg-white border border-[#F0F0F0] rounded-full">
-            <button className="p-4 relative">
-              <IoIosNotificationsOutline size={20} />
-              <div className="bg-[#F74A4A] absolute top-2.5 right-2 lg:right-3 rounded-full flex items-center justify-center text-xs text-white">
+          <div className="bg-white border border-[#F0F0F0] rounded-full hover:bg-[#F5F5F5]">
+            <button className="p-3 relative cursor-pointer ">
+              <IoIosNotificationsOutline size={28} />
+              {/* <div className="bg-[#F74A4A] absolute top-2.5 right-2 lg:right-3 rounded-full flex items-center justify-center text-xs text-white">
                 <p className="px-1">6</p>
-              </div>
+              </div> */}
             </button>
           </div>
 
