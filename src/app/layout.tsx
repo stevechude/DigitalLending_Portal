@@ -1,17 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ClientProviders from "@/provider/ClientProviders";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Digital Lending Portal",
@@ -25,9 +14,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
+        <link
+          href="https://fonts.cdnfonts.com/css/euclid-circular-a"
+          rel="stylesheet"
+        />
+      </head>
+      <body className={`antialiased`}>
         <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
