@@ -4,8 +4,12 @@ import GreenTrendUp from "@/assets/GreenTrendUp";
 import RedTrend from "@/assets/RedTrend";
 import WalletMoneyIcon from "@/assets/WalletMoneyIcon";
 import DataCard from "@/components/dash/DataCard";
+import LoanChart from "@/components/dash/LoanChart";
 import TitleContainer from "@/components/reusable/TitleContainer";
+import { ChartData } from "@/lib/dummy-chart";
+import { TableHeaders, TableRows } from "@/lib/random";
 import React, { useEffect, useRef, useState } from "react";
+import { CiSearch } from "react-icons/ci";
 
 const Dashboard = () => {
   const [calendar, setCalendar] = useState("");
@@ -138,7 +142,98 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <p>Dashboard</p>
+      <div className="flex flex-col gap-3 lg:gap-6">
+        <h3 className="text-[18px] text-[#15171C] font-medium">Recent Loans</h3>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 bg-[#F5F7FA] rounded-[100px] max-w-[268px] w-full">
+            <CiSearch className="ml-3" />
+            <input
+              type="text"
+              placeholder="Search Recent Loans"
+              className="bg-transparent outline-none py-2.5 rounded-[100px] placeholder:textSecondary text-[#15171C] text-[14px]"
+            />
+          </div>
+          <button className="bgPrimary text-white px-4 py-2 rounded-[50px] text-sm">
+            View All
+          </button>
+        </div>
+        {/* table */}
+        <div className="overflow-x-auto w-full">
+          <table className="w-full table-auto border-collapse">
+            <thead>
+              <tr className="bg-[#F5F7FA]">
+                {TableHeaders.map((header) => (
+                  <th
+                    key={header.key}
+                    className={`text-left px-4 py-3 font-semibold text-[#131B33] text-[14px] lg:text-[15px] ${
+                      header.key === "loanId" ? "rounded-l-[14px]" : ""
+                    }`}
+                  >
+                    {header.label}
+                  </th>
+                ))}
+                <th className="px-4 py-3 rounded-r-[14px]"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {TableRows?.length <= 0 ? (
+                <tr>
+                  <td
+                    colSpan={TableHeaders.length}
+                    className="text-center py-4"
+                  >
+                    No data available
+                  </td>
+                </tr>
+              ) : (
+                TableRows?.slice(0, 5).map((row, index) => (
+                  <tr
+                    key={index}
+                    className={`border border-[#F5F7FA] rounded-[1px] text-[#131B33] text-[12px] lg:text-[14px] bg-white`}
+                  >
+                    <td className="px-4 lg:px-4 py-4">{row?.loanId}</td>
+                    <td className="px-4 lg:px-4 py-4">{row?.customer}</td>
+                    <td className="px-4 lg:px-4 py-4">{row?.amount}</td>
+                    <td className="px-4 lg:px-4 py-4">{row?.accountNum}</td>
+                    <td className="px-4 lg:px-4 py-4">{row?.dateTime}</td>
+                    <td className={`px-4 lg:px-4 py-4`}>
+                      <span
+                        className={`${
+                          (row?.status === "Repaid" ||
+                            row?.status === "Successful") &&
+                          "text-[#00C566] bg-[#E6F9F0]"
+                        } ${
+                          row?.status === "Overdue" &&
+                          "bg-[#FE4D4F1A] text-[#FE4D4F]"
+                        } ${
+                          row?.status === "Disbursed" &&
+                          "text-[#002561] bg-[#E8F5FD]"
+                        } ${
+                          row?.status === "Running" &&
+                          "text-[#FF9D00] bg-[#FF9D001A]"
+                        } rounded-[50px] p-1.5 px-2 w-20 inline-block text-center`}
+                      >
+                        {row?.status}
+                      </span>
+                    </td>
+                    <td>
+                      <button className="text-[#009FE3] text-[12px] lg:text-[14px] cursor-pointer hover:underline">
+                        View more
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="w-full">
+        <p className="text-[16px] text-[#000000] font-medium">
+          Loan Performance
+        </p>
+        <LoanChart data={ChartData} />
+      </div>
     </div>
   );
 };

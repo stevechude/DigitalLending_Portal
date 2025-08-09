@@ -4,11 +4,13 @@ const DataCard = (card: any) => {
   return (
     <div
       key={card.id}
-      style={{
-        boxShadow: card.id > 1 ? "0px 0px 2px 0px #ccc" : "none",
-      }}
+      style={
+        {
+          // boxShadow: card.id > 1 ? "0px 0px 3px 1px #ccc" : "none",
+        }
+      }
       className={`${
-        card.id == 1 ? "bgPrimary" : "bg-white"
+        card.id == 1 ? "bgPrimary" : "bg-white shadow-md inset-shadow-2xs"
       } rounded-2xl p-4 w-full md:w-[260px] md:h-[154px]`}
     >
       <div className="flex flex-col gap-4">

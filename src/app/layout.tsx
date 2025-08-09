@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ClientProviders from "@/provider/ClientProviders";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Digital Lending Portal",
@@ -22,6 +23,7 @@ export default function RootLayout({
       </head>
       <body className={`antialiased`}>
         <ClientProviders>{children}</ClientProviders>
+        <Toaster position="top-center" />
       </body>
     </html>
   );

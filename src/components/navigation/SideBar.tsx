@@ -5,9 +5,12 @@ import LogoutIcon from "@/assets/LogoutIcon";
 import { SideBarLinks } from "@/lib/links";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
+import { Modal } from "../modal/Modal";
+import Logout from "../Logout";
 
 const SideBar = () => {
+  const [logoutOpen, setLogoutOpen] = useState(false);
   const pathname = usePathname();
 
   return (
@@ -54,7 +57,7 @@ const SideBar = () => {
         {/* bottom */}
         <div className="flex flex-col items-center gap-4 py-4 px-6 mb-3">
           <button
-            //   onClick={() => setLogoutOpen(true)}
+            onClick={() => setLogoutOpen(true)}
             className="flex items-center gap-2 cursor-pointer hover:bg-white/20 px-3 py-2.5 lg:py-3 text-[#FE4D4F] text-[12px] lg:text-[14px] mx-6 bg-[#FFFFFF26] rounded-lg w-full"
           >
             <LogoutIcon />
@@ -65,6 +68,11 @@ const SideBar = () => {
           </p>
         </div>
       </div>
+      {logoutOpen && (
+        <Modal show={logoutOpen} onClose={() => setLogoutOpen(false)}>
+          <Logout onCancel={() => setLogoutOpen(false)} />
+        </Modal>
+      )}
     </>
   );
 };
