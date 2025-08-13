@@ -7,12 +7,33 @@ import WalletMoneyIcon from "@/assets/WalletMoneyIcon";
 import DataCard from "@/components/dash/DataCard";
 import TitleContainer from "@/components/reusable/TitleContainer";
 import { ReportsHeaders, ReportsRows } from "@/lib/reports-dummy";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
+import ReactPaginate from "react-paginate";
 
 const Reports = () => {
   const [calendar, setCalendar] = useState("");
+  const [showingNumber, setShowingNumber] = useState(0);
+  const [itemsPerPage] = useState(10);
+  const [itemOffset, setItemOffset] = useState(0);
   const calendarRef = useRef<HTMLDivElement | null>(null);
+
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = ReportsRows?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(ReportsRows.length / itemsPerPage);
+
+  const handlePageClick = (event: any) => {
+    const newOffset = (event.selected * itemsPerPage) % ReportsRows.length;
+    setItemOffset(newOffset);
+  };
+
+  useEffect(() => {
+    if (ReportsRows.length > 10) {
+      setShowingNumber(10);
+    } else if (ReportsRows.length <= 10) {
+      setShowingNumber(itemsPerPage);
+    }
+  }, [ReportsRows]);
 
   const dashboardCards = [
     {
@@ -80,7 +101,7 @@ const Reports = () => {
             <p>Export as Excel</p>
           </button>
         </div>
-        <div className="overflow-x-auto w-full">
+        <div className="overflow-x-auto w-full flex flex-col gap-1">
           <table className="w-full table-auto border-collapse">
             <thead>
               <tr className="bg-[#F5F7FA]">
@@ -107,7 +128,7 @@ const Reports = () => {
                   </td>
                 </tr>
               ) : (
-                ReportsRows?.map((row, index) => (
+                currentItems?.map((row, index) => (
                   <tr
                     key={index}
                     className={`border border-[#F5F7FA] rounded-[1px] text-[#131B33] text-[12px] lg:text-[14px] bg-white`}
@@ -143,6 +164,33 @@ const Reports = () => {
               )}
             </tbody>
           </table>
+
+          <div className="flex items-center w-full justify-between flex-wrap">
+            <div className="bg-[#F5F7FA] rounded-3xl flex items-center text-xs md:text-sm">
+              <div className="px-2 py-1.5 lg:px-3 lg:py-2 flex items-center gap-2">
+                <p className="text-[#131B33]">Showing 1 - {showingNumber} of</p>
+                <div className="bgPrimary rounded-3xl text-white">
+                  <p className="px-1.5 py-0.5 md:px-2 md:py-1">
+                    {ReportsRows.length}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel="Next"
+              onPageChange={handlePageClick}
+              pageCount={pageCount}
+              previousLabel="Prev"
+              containerClassName="paginationContainer"
+              activeClassName="paginationActive"
+              pageClassName="eachElem"
+              previousLinkClassName="prevBtnClass"
+              nextLinkClassName="nexBtnClass"
+              renderOnZeroPageCount={null}
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -5,6 +5,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import EditIcon from "@/assets/EditIcon";
 import { usePathname } from "next/navigation";
+import { Modal } from "../modal/Modal";
+import CustomInput from "./CustomInput";
+import CustomButton from "./CustomButton";
+import EditInterest from "../dash/EditInterest";
+import CardSuccessful from "./CardSuccessful";
 
 type Props = {
   title: string;
@@ -22,6 +27,8 @@ const TitleContainer = ({
   setCalendar,
 }: Props) => {
   const [openDate, setOpenDate] = useState(false);
+  const [openInterestRate, setOpenInterestRate] = useState(false);
+  const [showDone, setShowDone] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -49,6 +56,11 @@ const TitleContainer = ({
     ) {
       setOpenDate(false);
     }
+  };
+
+  const handleModalCards = () => {
+    setOpenInterestRate(false);
+    setShowDone((prev) => !prev);
   };
 
   return (
@@ -91,7 +103,10 @@ const TitleContainer = ({
             </div>
 
             {pathname.includes("dashboard") && (
-              <button className="flex items-center gap-3 bgPrimary rounded-3xl px-2 lg:px-3 py-1.5 text-xs md:text-sm cursor-pointer text-white">
+              <button
+                onClick={() => setOpenInterestRate(!openInterestRate)}
+                className="flex items-center gap-3 bgPrimary rounded-3xl px-2 lg:px-3 py-1.5 text-xs md:text-sm cursor-pointer text-white"
+              >
                 <EditIcon />
                 <p>Edit Interest Rate</p>
               </button>
@@ -99,6 +114,26 @@ const TitleContainer = ({
           </div>
         </div>
       </div>
+      {openInterestRate && (
+        <Modal
+          show={openInterestRate}
+          onClose={() => setOpenInterestRate(false)}
+        >
+          <EditInterest
+            onUpdate={handleModalCards}
+            cancel={() => setOpenInterestRate(false)}
+          />
+        </Modal>
+      )}
+      {showDone && (
+        <Modal show={showDone} onClose={() => setShowDone(false)}>
+          <CardSuccessful
+            close={() => setShowDone(false)}
+            header="Request Successful"
+            description="Interest Rate Updated Successfully"
+          />
+        </Modal>
+      )}
     </>
   );
 };

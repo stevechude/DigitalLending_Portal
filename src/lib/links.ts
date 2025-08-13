@@ -15,22 +15,22 @@ export const SideBarLinks = [
     icon: DocumentIcon,
     path: "/micro-lending",
   },
-  {
-    id: 3,
-    title: "SALAD",
-    icon: DocumentIcon,
-    path: "/salad",
-  },
+  // {
+  //   id: 3,
+  //   title: "SALAD",
+  //   icon: DocumentIcon,
+  //   path: "/salad",
+  // },
   {
     id: 4,
     title: "Reports",
     icon: TrendUp,
     path: "/reports",
   },
-  {
-    id: 5,
-    title: "Audit Trail",
-    icon: TrendUp,
-    path: "/audit-trail",
-  },
+  // {
+  //   id: 5,
+  //   title: "Audit Trail",
+  //   icon: TrendUp,
+  //   path: "/audit-trail",
+  // },
 ];

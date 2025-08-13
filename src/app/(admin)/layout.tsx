@@ -12,7 +12,7 @@ const AdminLayout = ({
       <SideBar />
       <div className="flex flex-col w-full h-full">
         <Header />
-        <div className="bg-[#fff] h-full w-full p-2 md:py-[15px] md:px-[21px] overflow-y-auto">
+        <div className="bg-[#fcfcfc] h-full w-full p-2 md:py-[15px] md:px-[21px] lg:px-7 lg:py-5 overflow-y-auto">
           {children}
         </div>
       </div>

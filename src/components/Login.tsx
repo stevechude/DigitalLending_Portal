@@ -39,7 +39,7 @@ const Login = () => {
         </div>
 
         <div className="flex lg:items-center justify-center w-full h-full border border-[#98a2b3] rounded-2xl lg:border-0 overflow-y-auto lg:w-[50%] lg:pl-[109px] lg:pr-[88px]">
-          <div className="flex flex-col mt-10 gap-4 lg:gap-6 xl:gap-8 items-center lg:items-start w-full px-2 h-full">
+          <div className="flex flex-col mt-10 gap-4 lg:gap-6 xl:gap-8 items-center lg:items-start 2xl:mt-0 2xl:justify-center w-full px-2 h-full">
             <div className="flex flex-col gap-2 mt-10">
               <p className="text-primary font-semibold text-xl md:text-3xl">
                 Digital Lending Portal
@@ -70,7 +70,7 @@ const Login = () => {
               <CustomButton
                 onClick={handleLogin}
                 title="Login"
-                className="w-full mt-10 xl:mt-16"
+                className="w-full mt-10 xl:mt-16 2xl:mt-30"
               />
             </form>
             <div className="flex items-center justify-center w-full">

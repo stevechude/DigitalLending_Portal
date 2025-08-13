@@ -8,12 +8,21 @@ import LoanChart from "@/components/dash/LoanChart";
 import TitleContainer from "@/components/reusable/TitleContainer";
 import { ChartData } from "@/lib/dummy-chart";
 import { TableHeaders, TableRows } from "@/lib/random";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
+import { Calendar } from "react-date-range";
+import { format } from "date-fns";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { LuCalendarDays } from "react-icons/lu";
 
 const Dashboard = () => {
   const [calendar, setCalendar] = useState("");
+  const [capDate, setCapDate] = useState("");
+  const [openDate, setOpenDate] = useState(false);
   const calendarRef = useRef<HTMLDivElement | null>(null);
+  const capDateRef = useRef<HTMLDivElement | null>(null);
 
   const current = 45.2; // in millions
   const target = 50.0; // in millions
@@ -29,20 +38,45 @@ const Dashboard = () => {
     return () => clearTimeout(timeout);
   }, [current, target]);
 
+  useEffect(() => {
+    setCapDate(format(new Date(), "dd-MMMM-yyyy"));
+
+    document.addEventListener("keydown", hideOnEscape, true);
+    document.addEventListener("click", hideOnClickOutside, true);
+  }, [capDateRef]);
+
+  const handleSelectDate = (date: any) => {
+    setCapDate(format(date, "dd-MMMM-yyyy"));
+    setOpenDate(false);
+  };
+
+  //   hide date on ESC press
+  const hideOnEscape = (e: any) => {
+    if (e.key === "Escape") setOpenDate(false);
+  };
+
+  //   hide date on click outside
+  const hideOnClickOutside = (e: any) => {
+    if (capDateRef.current && !capDateRef.current.contains(e.target as Node)) {
+      setOpenDate(false);
+    }
+  };
+
   const dashboardCards = [
     {
       id: 1,
       title: "Total Loans Booked",
       value: "2,827",
       icon: <DocumentIcon fill="#002561" className="w-4 h-4" />,
-      percent: "15.50%",
-      percentIcon: <GreenTrendUp />,
-      info: "than last month",
+      // percent: "15.50%",
+      // percentIcon: <GreenTrendUp />,
+      // info: "than last month",
+      amount: "₦450,712,000",
     },
     {
       id: 2,
-      title: "Successful Loans",
-      value: "1,200",
+      title: "Matured Loan",
+      value: "2.5M/1,200",
       icon: <WalletMoneyIcon />,
       percent: "12,87%",
       percentIcon: <GreenTrendUp />,
@@ -104,12 +138,29 @@ const Dashboard = () => {
             <WalletMoneyIcon />
             <p className="text-[#15171C]">Daily Loan Cap & Variance</p>
           </div>
-          <input
-            type="date"
-            name=""
-            id=""
-            className="border border-[#E0E0E0] rounded-md p-1"
-          />
+          <div className="relative">
+            <div
+              onClick={() => setOpenDate(!openDate)}
+              className="flex items-center gap-2 justify-between border border-[#F0F0F0] rounded-[50px] px-3 py-2 cursor-pointer max-w-[200px]"
+            >
+              <LuCalendarDays size={18} color="#000" />
+              <input
+                type="text"
+                value={capDate}
+                readOnly
+                title={capDate}
+                className="text-end bg-white outline-none text-xs md:text-sm w-[105px] truncate cursor-pointer"
+              />
+            </div>
+            {openDate && (
+              <div
+                ref={capDateRef}
+                className="absolute right-0 top-10 z-10 shadow border border-[#E7E7E7] rounded-md"
+              >
+                <Calendar date={new Date()} onChange={handleSelectDate} />
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex items-center justify-between">
           {capsData.map((cap) => (
@@ -137,7 +188,7 @@ const Dashboard = () => {
           <div className="w-full h-[5px] bg-[#E3EFFC] rounded-[6px]">
             <div
               style={{ width: `${percentage}%` }}
-              className="bg-[#009FE3] h-full rounded-[6px] transition-[width] duration-700 ease-in-out"
+              className="bg-[#009FE3] h-full rounded-[6px] transition-[width] duration-1000 ease-in-out"
             ></div>
           </div>
         </div>
@@ -153,7 +204,7 @@ const Dashboard = () => {
               className="bg-transparent outline-none py-2.5 rounded-[100px] placeholder:textSecondary text-[#15171C] text-[14px]"
             />
           </div>
-          <button className="bgPrimary text-white px-4 py-2 rounded-[50px] text-sm">
+          <button className="bgPrimary text-white px-4 py-2 rounded-[50px] text-xs md:text-sm">
             View All
           </button>
         </div>
@@ -217,9 +268,12 @@ const Dashboard = () => {
                       </span>
                     </td>
                     <td>
-                      <button className="text-[#009FE3] text-[12px] lg:text-[14px] cursor-pointer hover:underline">
+                      <Link
+                        href={`/micro-lending/${row?.loanId}`}
+                        className="text-[#009FE3] text-[12px] lg:text-[14px] cursor-pointer hover:underline"
+                      >
                         View more
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                 ))
@@ -229,9 +283,21 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="w-full">
-        <p className="text-[16px] text-[#000000] font-medium">
-          Loan Performance
-        </p>
+        <div className="lg:flex items-center w-full">
+          <h2 className="text-[16px] text-[#000000] font-medium">
+            Loan Performance
+          </h2>
+          <div className="flex gap-3 lg:gap-8 whitespace-nowrap text-xs lg:text-sm my-3 items-center justify-center lg:w-[80%]">
+            <div className="justify-start items-center gap-2 flex">
+              <div className="bg-[#39AD4B] h-3 w-3 rounded-full" />
+              <div className="text-[#666666]">Performing (1,200)</div>
+            </div>
+            <div className="justify-start items-center gap-2 flex">
+              <div className="bg-[#F73541] h-3 w-3 rounded-full" />
+              <div className="text-[#666666]">Non-Performing (200)</div>
+            </div>
+          </div>
+        </div>
         <LoanChart data={ChartData} />
       </div>
     </div>

@@ -45,7 +45,7 @@ const CustomInput = ({
                 icon
                   ? "rounded-r-4xl w-full h-full pl-1 py-3 xl:py-3.5 2xl:py-4 outline-[#A3D8F5] placeholder:text-[#D9D9D9]"
                   : "rounded-4xl w-full h-full pl-3 xl:pl-4 py-3 xl:py-3.5 2xl:py-4 outline-[#A3D8F5] placeholder:text-[#D9D9D9]"
-              } ${className}`}
+              } ${className} ${type === "number" ? "spin-button-none" : ""}`}
             />
           </div>
         </div>

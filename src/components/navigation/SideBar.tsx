@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { Modal } from "../modal/Modal";
 import Logout from "../Logout";
+import Image from "next/image";
 
 const SideBar = () => {
   const [logoutOpen, setLogoutOpen] = useState(false);
@@ -16,7 +17,7 @@ const SideBar = () => {
   return (
     <>
       <div className="bgPrimary hidden lg:flex flex-col justify-between max-w-[300px] w-[280px] h-screen">
-        <div className="flex flex-col gap-[54px]">
+        <div className="flex flex-col gap-[54px] z-10">
           <div className="h-[75px] w-full border-b border-b-white flex items-center">
             <div className="flex items-center justify-between w-full px-3">
               <KeystoneIcon className="w-[90px]" />

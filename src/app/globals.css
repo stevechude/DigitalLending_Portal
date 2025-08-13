@@ -1,28 +1,9 @@
 @import "tailwindcss";
 
-:root {
-  /* --background: #ffffff;
-  --foreground: #171717; */
-}
-
-@theme inline {
-  /* --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono); */
-}
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
-
 @layer base {
   :root {
     --bg-primary: #002561;
-    --text-primary: #15171c;
+    --text-primary: #131b33;
     --text-secondary: #98a2b3;
     --text-tertiary: #009fe3;
   }
@@ -48,4 +29,30 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "Euclid Circular A", sans-serif;
+}
+
+.spin-button-none::-webkit-outer-spin-button,
+.spin-button-none::-webkit-inner-spin-button {
+  appearance: none;
+}
+
+/* react paginate styling */
+.paginationContainer {
+  @apply w-fit text-xs lg:text-sm font-medium text-[#98a2b3] flex items-center justify-center;
+}
+
+.paginationActive {
+  @apply bg-[#002561] rounded-full text-white;
+}
+
+.eachElem {
+  @apply py-1 px-2 lg:px-3 cursor-pointer;
+}
+
+.prevBtnClass {
+  @apply text-[#98a2b3] px-2 cursor-pointer;
+}
+
+.nexBtnClass {
+  @apply text-[#98a2b3] px-2 cursor-pointer;
 }

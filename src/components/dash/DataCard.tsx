@@ -1,14 +1,13 @@
+"use client";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const DataCard = (card: any) => {
+  const pathname = usePathname();
+
   return (
     <div
       key={card.id}
-      style={
-        {
-          // boxShadow: card.id > 1 ? "0px 0px 3px 1px #ccc" : "none",
-        }
-      }
       className={`${
         card.id == 1 ? "bgPrimary" : "bg-white shadow-md inset-shadow-2xs"
       } rounded-2xl p-4 w-full md:w-[260px] md:h-[154px]`}
@@ -56,10 +55,14 @@ const DataCard = (card: any) => {
           )}
           <p
             className={`text-[11px] ${
-              card.id == 1 ? "text-white" : "text-[#8C8C8C]"
+              card.id == 1 && pathname === "/dashboard"
+                ? "text-[#131B33] bg-white rounded-4xl py-1 px-3 font-semibold text-[14px]"
+                : card.id == 1 && pathname === "/reports"
+                ? "text-white"
+                : "text-[#8C8C8C]"
             }`}
           >
-            {card.info}
+            {card.info || card.amount}
           </p>
         </div>
       </div>

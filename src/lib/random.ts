@@ -89,3 +89,19 @@ export const TableRows = [
     status: "Repaid",
   },
 ];
+
+export const loanDeets = {
+  userPhoto: "/loanUser.png",
+  firstName: "UKAM",
+  lastName: "INAH",
+  middleName: "IGBON",
+  email: "samueltbankole@gmail.com",
+  duration: "7 Days",
+  loanStatus: "Repaid",
+  bvn: "22134892821",
+  accNumber: "1003293739",
+  loanPurpose: "Food",
+  address: "4, Abayomi James Street, Surulere, Lagos State",
+  phone: "08146525623",
+  dob: "15/09/1980",
+};
